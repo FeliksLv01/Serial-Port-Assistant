@@ -57,6 +57,7 @@ public class SerialAssistant {
             serialController.setListenerToSerialPort(ev -> {
                 if (ev.getEventType() == SerialPortEvent.DATA_AVAILABLE) {
                     receiveText.appendText( new String(serialController.readData()));
+
                 }
             });
             isOpen = true;
