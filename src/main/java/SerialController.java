@@ -35,10 +35,10 @@ public class SerialController {
      * 开启串口
      *
      * @param name     串口名称
-     * @param baudRete 波特率
+     * @param baudRate 波特率
      * @return 串口对象
      */
-    public boolean open(String name, int baudRete) {
+    public boolean open(String name, int baudRate) {
         try {
             // 通过端口名称得到端口
             CommPortIdentifier portIdentifier = CommPortIdentifier.getPortIdentifier(name);
@@ -48,7 +48,7 @@ public class SerialController {
             if (commPort instanceof SerialPort) {
                 serialPort = (SerialPort) commPort;
                 //设置串口参数（波特率，数据位8， 停止位1， 校验位无）
-                serialPort.setSerialPortParams(baudRete, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
+                serialPort.setSerialPortParams(baudRate, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
                 return true;
             } else {
                 //是其他类型端口
