@@ -6,6 +6,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 public class SerialAssistant {
@@ -56,7 +57,11 @@ public class SerialAssistant {
             }
             serialController.setListenerToSerialPort(ev -> {
                 if (ev.getEventType() == SerialPortEvent.DATA_AVAILABLE) {
-                    receiveText.appendText( new String(serialController.readData()));
+                    try {
+                        receiveText.appendText( new String(serialController.readData(),"GBK"));
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    }
                 }
             });
             isOpen = true;

@@ -88,7 +88,6 @@ public class SerialController {
             try {
                 if (os != null) {
                     os.close();
-                    os = null;
                 }
             } catch (IOException e) {
                 e.printStackTrace();
