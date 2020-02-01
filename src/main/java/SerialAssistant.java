@@ -57,11 +57,16 @@ public class SerialAssistant {
             }
             serialController.setListenerToSerialPort(ev -> {
                 if (ev.getEventType() == SerialPortEvent.DATA_AVAILABLE) {
+<<<<<<< HEAD
                     try {
                         receiveText.appendText( new String(serialController.readData(),"GBK"));
                     } catch (UnsupportedEncodingException e) {
                         e.printStackTrace();
                     }
+=======
+                    receiveText.appendText( new String(serialController.readData()));
+
+>>>>>>> d8c16f256a9f86accaf0005bea39c2483734201a
                 }
             });
             isOpen = true;
