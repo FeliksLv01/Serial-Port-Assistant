@@ -1,8 +1,8 @@
 import gnu.io.*;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
@@ -75,22 +75,17 @@ public class SerialController {
      *
      * @param data 发送的数据
      */
-    public void sendData(byte[] data) {
-        OutputStream os = null;
+    public void sendData(String data) {
+        PrintStream printStream = null;
         try {
-            os = serialPort.getOutputStream(); //获取串口的输出流
-            os.write(data);
-            os.flush();
+            printStream = new PrintStream(serialPort.getOutputStream(),true,"GBK");  //获取串口的输出流
+            printStream.print(data);
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
-            try {
-                if (os != null) {
-                    os.close();
+                if (printStream != null) {
+                    printStream.close();
                 }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
         }
     }
 
@@ -103,24 +98,43 @@ public class SerialController {
         InputStream is = null;
         byte[] bytes = null;
         try {
-            is =  serialPort.getInputStream(); //获取输入流
+            is = serialPort.getInputStream(); //获取输入流
             int bufflenth = is.available(); //获取数据长度
-            while (bufflenth != 0) {
+            while(bufflenth != 0) {
                 bytes = new byte[bufflenth];
                 int read = is.read(bytes);
                 bufflenth = is.available();
             }
         } catch (IOException e) {
             e.printStackTrace();
-        } finally {
-            try {
-
-                    is.close();
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
         }
+        try {
+            is.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return bytes;
+    }
+
+
+    /**
+     * 合并数组
+     *
+     * @param firstArray  第一个数组
+     * @param secondArray 第二个数组
+     * @return 合并后的数组
+     */
+    public byte[] concat(byte[] firstArray, byte[] secondArray) {
+        return getBytes(firstArray, secondArray);
+    }
+
+    public static byte[] getBytes(byte[] firstArray, byte[] secondArray) {
+        if (firstArray == null || secondArray == null) {
+            return null;
+        }
+        byte[] bytes = new byte[firstArray.length + secondArray.length];
+        System.arraycopy(firstArray, 0, bytes, 0, firstArray.length);
+        System.arraycopy(secondArray, 0, bytes, firstArray.length, secondArray.length);
         return bytes;
     }
 
@@ -137,5 +151,7 @@ public class SerialController {
         serialPort.notifyOnDataAvailable(true);//串口有数据监听
         serialPort.notifyOnBreakInterrupt(true);//中断事件监听
     }
+
+
 }
 
