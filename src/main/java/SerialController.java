@@ -1,8 +1,6 @@
 import gnu.io.*;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.PrintStream;
+
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
@@ -78,14 +76,14 @@ public class SerialController {
     public void sendData(String data) {
         PrintStream printStream = null;
         try {
-            printStream = new PrintStream(serialPort.getOutputStream(),true,"GBK");  //获取串口的输出流
+            printStream = new PrintStream(serialPort.getOutputStream(), true, "GBK");  //获取串口的输出流
             printStream.print(data);
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
-                if (printStream != null) {
-                    printStream.close();
-                }
+            if (printStream != null) {
+                printStream.close();
+            }
         }
     }
 
@@ -94,15 +92,16 @@ public class SerialController {
      *
      * @return 返回串口数据
      */
-    public byte[] readData() {
+    public String readData() throws UnsupportedEncodingException {
         InputStream is = null;
         byte[] bytes = null;
         try {
             is = serialPort.getInputStream(); //获取输入流
             int bufflenth = is.available(); //获取数据长度
-            while(bufflenth != 0) {
+            while (bufflenth != 0) {
                 bytes = new byte[bufflenth];
-                int read = is.read(bytes);
+//                int read = is.read(bytes);
+                is.read(bytes);
                 bufflenth = is.available();
             }
         } catch (IOException e) {
@@ -113,7 +112,8 @@ public class SerialController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return bytes;
+        String str=new String(bytes, "GBK");
+        return str;
     }
 
 

@@ -2,10 +2,12 @@
 ![kcqnly](https://ly-object-1259106193.cos.ap-chengdu.myqcloud.com/github/SerialAssistant-2.png)
 
 # 使用说明
+## 直接使用jar
 要把 rxtxSerial64.dll 和 rxtxParallel64.dll
 分别放到 jdk1.8.0_211\jre\bin 和 jdk1.8.0_211\jre\lib\ext 文件夹里 
 这两个文件我放到了项目的dependences文件夹下
-
+## 使用.exe
+直接安装，自带jre
 
 # 已解决的问题
 - 无法选择波特率

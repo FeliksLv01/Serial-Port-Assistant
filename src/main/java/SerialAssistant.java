@@ -6,8 +6,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
-import lombok.Getter;
-import lombok.Setter;
+
 
 import java.io.UnsupportedEncodingException;
 import java.util.List;
@@ -63,18 +62,15 @@ public class SerialAssistant {
                 if (ev.getEventType() == SerialPortEvent.DATA_AVAILABLE) {
                     String str = null;
                     try {
-                        str = new String(serialController.readData(),"GBK");
+                        str = serialController.readData();
                     } catch (UnsupportedEncodingException e) {
                         e.printStackTrace();
                     }
-                        String finalStr = str;
-                        Platform.runLater(() -> {
-                        if(receiveText.getLength()<4100)
-                        {
+                    String finalStr = str;
+                    Platform.runLater(() -> {
+                        if (receiveText.getLength() < 4000) {
                             receiveText.appendText(finalStr);
-                        }
-                        else
-                        {
+                        } else {
                             receiveText.deleteText(0, finalStr.length());
                             receiveText.appendText(finalStr);
                         }
@@ -99,8 +95,7 @@ public class SerialAssistant {
     /**
      * 清除接收框
      */
-    public void clear(ActionEvent actionEvent)
-    {
+    public void clear(ActionEvent actionEvent) {
         receiveText.clear();
     }
 }
