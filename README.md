@@ -1,5 +1,5 @@
 # java串口调试助手
-![kcqnly](https://ly-object-1259106193.cos.ap-chengdu.myqcloud.com/github/SerialAssistant-2.png)
+![SerialAssistant.png](https://i.loli.net/2020/09/17/aM5OjGrxze6sRNU.png)
 
 # 使用说明
 ## 直接使用jar
